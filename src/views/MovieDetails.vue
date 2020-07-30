@@ -162,6 +162,9 @@ export default {
     },
     
     created() {
+        
+        window.scrollTo(0,0)
+
         // Fetch the details about the movie
         axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.id}?api_key=${this.apiKey}&language=en-US`)
         .then(res => {
