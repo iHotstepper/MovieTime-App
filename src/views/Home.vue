@@ -2,12 +2,8 @@
   <div
     justify="center"
     align="center"
-    v-infinite-scroll="loadMore"
-    infinite-scroll-disabled="infiniteScrollBusy"
-    infinite-scroll-distance="0"
-    infinite-scroll-immediate-check="false"
-  >
-    <v-container class="col-lg-8 col-xl-8">
+    >
+    <v-container class="col-lg-8 col-xl-8" v-scroll="myScroll">
       <main-header></main-header>
       <years-list :yearsListForTabs="yearsListForTabs"></years-list>
       <v-row justify="end">
@@ -60,12 +56,24 @@ export default {
       currentPageNum: 0,
       yearsListForTabs: [],
       currentDate: null,
-      infiniteScrollBusy: false,
     };
   },
   methods: {
     goUp() {
       window.scroll({top:0, behavior:'smooth'});
+    },
+
+    myScroll() {
+
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        setTimeout(() => {
+        for (var i = 0, j = 1; i < j; i++) {
+          this.currentPageNum++;
+          this.getMovieByYear();
+        }
+      }, 1000);
+      }
+
     },
 
     getCurrentDate() {
@@ -96,19 +104,6 @@ export default {
           this.moviesList = this.moviesList.concat(result);
         })
         .catch((error) => console.log(error));
-    },
-
-    loadMore() {
-      // Infinite Scroll
-      this.infiniteScrollBusy = true;
-
-      setTimeout(() => {
-        for (var i = 0, j = 1; i < j; i++) {
-          this.currentPageNum++;
-          this.getMovieByYear();
-        }
-        this.infiniteScrollBusy = false;
-      }, 1000);
     },
 
     handleScroll() {
