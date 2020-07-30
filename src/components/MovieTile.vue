@@ -1,5 +1,5 @@
 <template>
-  <v-col transition="scroll-y-transition" xl="2" lg="3" md="4" sm="6" xs="12">
+  <v-col transition="scroll-y-transition" xl="2" lg="3" md="4" sm="4" xs="12">
     <v-fade-transition>
       <v-hover v-slot:default="{ hover }" :value="isHover" transition="scroll-y-transition">
         <v-card
